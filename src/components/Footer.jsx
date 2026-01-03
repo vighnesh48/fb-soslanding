@@ -101,13 +101,19 @@ export default function Footer() {
             <ul className="space-y-3 text-gray-400 text-sm">
              <ul className="space-y-3 text-gray-400 text-sm">
   <li className="hover:text-white transition cursor-pointer">
-    <a href="#Course">B.Pharm Programs</a>
+    <a href="#Course">B.sc Programs</a>
   </li>
   <li className="hover:text-white transition cursor-pointer">
-    <a href="#Course">D.Pharm Programs</a>
+    <a href="#Course">M.sc Programs</a>
   </li>
   <li className="hover:text-white transition cursor-pointer">
-    <a href="#Course">M. Pharm Programs</a>
+    <a href="#Course">Doctorate Programs</a>
+  </li>
+  <li className="hover:text-white transition cursor-pointer">
+    <a href="#Course">B.Sc Nanotechnology</a>
+  </li>
+   <li className="hover:text-white transition cursor-pointer">
+    <a href="#Course">B.Sc Wine Technology</a>
   </li>
  
 </ul>

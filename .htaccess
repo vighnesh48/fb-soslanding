@@ -1,8 +1,8 @@
 <IfModule mod_rewrite.c>
   RewriteEngine On
-  RewriteBase /sandip-university-sod/
+  RewriteBase /sandip-university-sos/
   RewriteRule ^index\.html$ - [L]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule . /sandip-university-sod/index.html [L]
+  RewriteRule . /sandip-university-sos/index.html [L]
 </IfModule>

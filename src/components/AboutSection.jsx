@@ -34,8 +34,8 @@ export default function AboutSection() {
             </div>
 
             <p className="mt-3 text-gray-600 leading-relaxed text-sm">
-Sandip University is one of the best pharmacy schools in Nashik, Maharashtra. Recognised by the Pharmacy Council of India, Sandip School of Pharmaceutical Sciences offers state-of-the-art undergraduate and postgraduate courses. Our goal is to educate the next generation of pharmacists and researchers. Students can choose to pursue a Diploma in Pharmacy, a Bachelor in Pharmacy, and a MSc. in Pharmaceutical Sciences from Sandip University.
-The curriculum of the programs offered by Sandip School of Pharmaceutical Sciences follows industry standards and guidelines set by the Pharmacy Council of India. In high-tech classrooms, students learn comprehensive theoretical knowledge. Sandip University offers some of the best pharmacy courses in Nashik and is home to the most futuristic labs where students can hone their skills to industry standards.
+Science is a vast and diverse field with newer discoveries being made even today. As one of the top science colleges in Maharashtra, Sandip School of Science aims at amplifying the fallible, alive and exciting parts of science through multiple means. One of the most important steps taken is to implement the right curriculum to help students gain a 3600 view of applied sciences.
+Our undergraduate and postgraduate programs are designed to help students become global scientists in the field of their choice. The course structure is focused on balancing academic knowledge with hands-on skills through well-designed laboratories, research opportunities, and industry exposure. Our students gain ample exposure through well-structured activities such as workshops, seminars, expert guest lectures, webinars, field trips and industry visits.
             </p>
 
             <ul className="mt-4 space-y-4 text-gray-700">
@@ -83,7 +83,7 @@ The curriculum of the programs offered by Sandip School of Pharmaceutical Scienc
 
             <img
               src="herosection/clgimage.webp"
-              alt="students crafting"
+              alt="sos"
               className="w-full h-80 sm:h-80 md:h-96 lg:h-[555px] object-cover"
             />
 

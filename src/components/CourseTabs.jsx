@@ -14,112 +14,222 @@ const courseData = {
   // ============================
   //        B.Des
   // ============================
- "B.Pharm": {
-  title: "Bachelor of Pharmacy",
-  duration: "4 Years | Full-Time",
-  image: "/herosection/course1.png",
+  "B.sc": {
+    title: "Bachelor of Science (B.Sc)",
+    duration: "3 Years | Full-Time",
+    image: "/herosection/course1.png",
 
-  specializations: {
-    "B.Pharm": {
-      summary:
-        "B.Pharm program is an undergraduate program, which is taught for four years and eight semesters. In B.Pharm, various subjects are taught such as medicines and their uses, medicinal chemistry, drug formulation, and drug research. After learning these subjects, students can make a good career. As one of the best colleges for Bachelors in Pharmacy, Sandip University has dedicated labs for pharmaceutical students to help them hone their skills.",
-      careers: [
-        "Community Pharmacist",
-        "Hospital Pharmacist",
-        "Clinical Pharmacist",
-        "Drug Information Officer"
-      ]
-    }
-  },
+    specializations: {
+      "Microbiology": {
+        summary:
+          "Sandip University offers a Bachelor of Science degree with a specialisation in Microbiology. The program runs for three years and six semesters. Students who choose this program acquire in-depth knowledge of a variety of microbiology topics.Students graduating from Sandip University's Bachelor of Science in Microbiology are taught genetics, cell remodeling, ",
+        careers: [
+          "Clinical Microbiologist",
+  "Lab Technician / Lab Manager",
+  "Infection Control Officer",
+  "Diagnostic Labs (Pathology, Hospitals)"
+        ]
+      },
 
-  eligibility: [
-    "The candidate should have passed 10+2 examination or its equivalent examination with English as one of the subjects and Physics, Chemistry, Mathematics or Biology as optional subjects individually."
-  ]
-},
-  
+      " Forensic Science": {
+        summary:
+          "One of the top B.Sc forensic science colleges in Nashik, Sandip University offers a Bachelor of Science degree with a specialisation in Forensic Science. The program runs for three years and her six semesters. Students who choose this program acquire in-depth knowledge of a variety of forensic topics.",
+        careers: [
+          "Forensic Expert",
+          "Crime Laboratory Analyst",
+          "Drug Analyst",
+          "Forensic Toxicologist",
+          "Crime Scene Investigator"
+        ]
+      },
+
+      "Physics": {
+        summary:
+          "B.Sc. in Physics is one of the most popular undergraduate science degrees, spanning three years and six semesters. This program focuses on the fundamentals of physics and includes relevant topics like quantum mechanics, optics, theory of relativity, nuclear physics, and thermodynamics.",
+        careers: [
+          "Radiologist Assistant",
+          "Radiation Oncologist",
+          "Senior Physicist",
+          "Consulting Physicist"
+        ]
+      },
+
+ "Computational Mathematics & Data Science": {
+        summary:
+          "Sandip University’s B.Sc. in Computational Mathematics and Data Science program is a comprehensive three-year undergraduate program spread across six semesters. Each semester combines the practical applications of computational mathematics with the fundamentals of data science",
+        careers: [
+          "Data Operations Scientist",
+          "Statistician",
+          "Quantitative Mathematician",
+          "AI Consultant  "
+        ]
+      },
+
+
+
+ "Wine Technology": {
+        summary:
+          "Sandip University’s B.Sc. in Wine Technology program is a dynamic industry-led undergraduate degree program spanning three years and six semesters. This program aims to provide students with a comprehensive understanding of the process, principles, science, and artistic vision behind winemaking.",
+        careers: [
+          "Winemaker ",
+          "Wine Lab Technician",
+          "Vineyard Manager ",
+          "Quality Control Specialist "
+        ]
+      },
 
 
 
 
-"D.Pharm": {
-  title: "Diploma in Pharmacy",
-  duration: "2 Years | Full-Time",
-  image: "/herosection/course1.png",
+ "Nanoscience and Nanotechnology": {
+        summary:
+          "B.Sc. in Nanoscience and Nanotechnology is a comprehensive undergraduate degree program divided into six semesters across three years. This is a highly specialised program designed to train students in the manipulation of matter at the nanoscale.",
+        careers: [
+          "Medical Nanotechnologist",
+          "Pharmaceutical Scientist",
+          "Development Engineer",
+          "Research Scientist"
+        ]
+      },
 
-  specializations: {
-    "D.Pharm": {
-      summary:
-        "Diploma in Pharmacy is a two-year course with a mix of theoretical knowledge and practical skills. This helps students become job-ready in the pharmaceutical industry.",
-      careers: [
-        "Community Pharmacist",
-"Retail Pharmacist",
-"Hospital Pharmacist",
-"Medical Store Manager",
-      ]
-    }
-  },
 
-  eligibility: [
-    "Passed 10+2 examination with Physics and Chemistry as compulsory subjects along with Mathematics/ Biology subject."
-  ]
-},
 
-"M.Pharm": {
-  title: "Master of Pharmacy",
-  duration: "2 Years | Full-Time",
-  image: "/herosection/course1.png",
 
-  specializations: {
-    "M.Pharm Industrial Pharmacy": {
-      summary:
-        "Sandip University is one of the best pharmacy schools in Nashik, Maharashtra. Recognised by the Pharmacy Council of India, Sandip School of Pharmaceutical Sciences offers state-of-the-art undergraduate and postgraduate courses. ",
-      careers: [
-        "Product Designer",
-        "Industrial Designer",
-        "UX Designer",
-        "Design Strategist"
-      ]
+
+
+
+
+
+
+
+
+
+
+      "Chemistry": {
+        summary:
+          "B.Sc. in Chemistry is an advanced undergraduate degree program spread across three years and further divided into six semesters. This is one of the best B.Sc. in Chemistry degrees in Nashik, as its course curriculum is designed to provide students with detailed academic knowledge about the various aspects of chemistry such as organic and inorganic chemistry.",
+        careers: [
+          "Biomedical Chemist",
+          "Lab Chemist",
+          "Forensic Chemist",
+          "Chemical Associate"
+        ]
+      }
     },
 
-
-"M.Pharm Pharmaceutical Quality Assurance": {
-      summary:
-        "Sandip University is one of the best pharmacy schools in Nashik, Maharashtra. Recognised by the Pharmacy Council of India, Sandip School of Pharmaceutical Sciences offers state-of-the-art undergraduate and postgraduate courses. ",
-      careers: [
-        "Product Designer",
-        "Industrial Designer",
-        "UX Designer",
-        "Design Strategist"
-      ]
-    }
+       eligibility: [
+      "Passed 10+2 science or equivalent course from any recognized Board with minimum 45% marks ",
+      "Three years Diploma from any recognised Board of Technical Education"
+    ]
   },
 
-
-
-
-
-
-
-
-  eligibility: [
-    "B.Pharm passed from Indian university from an institution approved by Pharmacy Council of India and has scored not less than 55% of the maximum marks. (Aggregate of 4 years of B. Pharm.)"
-  ]
-},
-
-
-
-
-
   
+
+  // ============================
+  //        M.Sc
+  // ============================
+  "M.Sc": {
+    title: "Master of Science (M.Sc)",
+    duration: "2 Years | Full-Time",
+    image: "/herosection/course2.jpg",
+
+    specializations: {
+      "Life Science": {
+        summary:
+          "Sandip University offers a two-year, four-semester Master of Science in Life Sciences course. This program concentrates on research on microorganisms such as viruses, fungi, and various algae, as well as plant, animal, and human life processes. ",
+        careers: [
+          "Food Scientist",
+          "Nutritionist",
+          "Product Manager",
+          "Project Manager"
+        ]
+      },
+ "Physics": {
+        summary:
+          "Blessed with beautiful nature and as one of the top M.Sc in Physics colleges in Nashik, Sandip University offers the best learning environment with the spacious classroom and laboratory facilities for the learners. ",
+        careers: [
+          "Radiologist Assistant",
+          "Radiation Oncologist",
+          "Senior Physicist",
+          "Consulting Physicist"
+        ]
+      },
+
+
+"Chemistry (organic / Analytical)": {
+        summary:
+          "The Sandip University Graduate MSc Organic / Analytical Chemistry Program focuses on the study of various constituents of various organic compounds, including their organic properties, structures, and reactions. ",
+        careers: [
+           "Biomedical Chemist",
+          "Lab Chemist",
+          "Forensic Chemist",
+          "Chemical Associate"
+        ]
+      },
+
+
+"Mathematics": {
+        summary:
+          "The Department of Mathematics was established at the Sandip School of Science in 2016 with the aim of training individuals towards research and teaching in advanced fields of mathematics.",
+        careers: [
+           "Mathematician",
+          "Data Scientist",
+          "Statistician",
+          "Investment Analyst"
+        ]
+      },
+
+"Microbiology": {
+        summary:
+          "Sandip University offers her a two-year full-time Master's degree in Microbiology divided into her four semesters. Each semester lasts six months, followed by semester tests.  ",
+        careers: [
+          "Clinical Microbiologist",
+  "Lab Technician / Lab Manager",
+  "Infection Control Officer",
+  "Diagnostic Labs (Pathology, Hospitals)"
+        ]
+      },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      "Forensic Science": {
+        summary:
+          "Sandip University has diverse faculties in different areas of science to guide students and direct projects through the complexities of this important field. Sandip University is one of the best universities in Maharashtra.",
+        careers: [
+          "Analytical Chemist",
+          "Biomedical Scientist",
+          "Crime Scene Investigator",
+          "Detective",
+          "Crime Scene Investigator"
+        ]
+      }
+    },
+
+    eligibility: [
+      "BSc (any branch) or BE/BTech with Physics and Mathematics courses with aggregate 50% for general category or & 45 % for SC / ST / OBC"
+    ]
+  }
 };
 
 
 
 
 export default function CourseTabs() {
-  const [activeTab, setActiveTab] = useState("B.Pharm");
+  const [activeTab, setActiveTab] = useState("B.sc");
   const [activeSpec, setActiveSpec] = useState(
-    Object.keys(courseData["B.Pharm"].specializations)[0]
+    Object.keys(courseData["B.sc"].specializations)[0]
   );
   const [openModal, setOpenModal] = useState(false);
   // PRELOAD ALL IMAGES (removes first-time lag)
@@ -229,9 +339,9 @@ export default function CourseTabs() {
                   <FontAwesomeIcon icon={faBriefcase} className="text-sky-500" />
                   {courseData[activeTab].duration}
 
-                {/*}  <h4 className="text-sm font-bold text-slate-400 uppercase tracking-wider">
+                  <h4 className="text-sm font-bold text-slate-400 uppercase tracking-wider">
                     Choose Specialization
-                  </h4>*/}
+                  </h4>
                 </div>
               </div>
 

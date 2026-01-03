@@ -57,7 +57,7 @@ const Form = () => {
       .post("https://onlinepayments.sandipuniversity.com/Api/get_course_details_for_forms", {
         campus: "nashik",
         year: "2026",
-        school_code: "1010",
+        school_code: "1006",
       })
       .then((res) => res.data.status && setCourses(res.data.data || []))
       .catch((err) => console.error("Courses API Error:", err));
@@ -93,7 +93,7 @@ const Form = () => {
     try {
       const res = await axios.post(
         "https://onlinepayments.sandipuniversity.com/Api/get_stream_details_for_forms",
-        { school_code: "1010", course_id: courseId, campus: "nashik", year: "2026" }
+        { school_code: "1006", course_id: courseId, campus: "nashik", year: "2026" }
       );
 
       const streams = res.data.data?.streams || res.data.data || [];
@@ -176,7 +176,7 @@ const Form = () => {
       state: form.state,
       city: form.city,
       campus: "N",
-      school: "10",
+      school: "6",
       course: form.course,
       specialization: form.specialization,
       fullName: form.fullName,

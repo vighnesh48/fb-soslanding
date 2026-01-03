@@ -14,7 +14,7 @@ export default function Herosection() {
         transition={{ duration: 12, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
         className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
         // style={{ backgroundImage: "url('/herosection/bghero.png')" }}
-                style={{ backgroundImage: "url('/herosection/bgimg.jpg')" }}
+                style={{ backgroundImage: "url('/herosection/banner.jpg')" }}
 
       />
 
@@ -45,7 +45,7 @@ export default function Herosection() {
               className="mt-2 mb-6"
             >
               <span className="text-4xl sm:text-4xl md:text-6xl font-extrabold bg-gradient-to-r from-white to-white bg-clip-text text-transparent tracking-wide drop-shadow-[0_4px_15px_rgba(0,0,0,0.7)]">
-               School of Pharmaceutical Sciences
+               School of Sciences
               </span>
 
               <div className="h-[2px] sm:h-[4px] w-[10rem] sm:w-[18rem] md:w-[32rem] mt-3 mx-auto lg:mx-0 bg-gradient-to-r from-blue-600 to-red-300 rounded-full shadow-lg" />

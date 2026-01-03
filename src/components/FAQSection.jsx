@@ -4,28 +4,28 @@ import { motion } from "framer-motion";
 
 const faqs = [
   {
-    q: "What is the eligibility criteria for B.Pharm. admission at Sandip University’s School of Pharmaceutical Science?",
-    a: "The candidate should have passed 10+2 examination or its equivalent examination with English as one of the subjects and Physics, Chemistry, Mathematics or Biology as optional subjects individually.",
+    q: "What is the eligibility criteria for B.SC. admission at Sandip University’s school of sciences?",
+    a: "10 + 2 with Chemistry as compulsory subject and 40 % & 45% aggregate percentage for reserved category and general category respectively",
   },
   {
-    q: "Do I need to appear for any entrance exam or portfolio evaluation for Sandip University’s Pharm. program?",
-    a: "Sandip University – School Of Pharmaceutical Science conducts its own entrance examination, SU-DAT, for admission to the B.Des. program. We also accept valid scores from NID, UCEED, and NIFT entrance exams.",
+    q: "What is the eligibility criteria for M.SC. admission at Sandip University’s school of sciences?",
+    a: "Graduation from respective stream or equivalent course with minimum 50% marks for open and 45% marks forreserved category students",
   },
   {
-    q: "Do I need to have prior drawing or art skills to apply at Sandip University’s School of Pharmaceutical Science?",
-    a: "No, it is not compulsory. Creativity and design thinking ability are more important.",
+    q: " What are the eligibility criteria for UG and PG courses at Sandip University?",
+    a: "Eligibility for most UG programs is 10+2 from a reputed educational institution with minimum 50% aggregate marks in the qualifying exam, and the eligibility for most PG programs is an undergraduate degree in the relevant field from a UGC-recognised university with minimum 50% aggregate marks in the qualifying exam. For more information, choose the specific program you prefer to check the eligibility.",
   },
   {
-    q: "Are internships included in the curriculum at Sandip University’s School of Pharmaceutical Science?",
+    q: "Are internships included in the curriculum at Sandip University’s school of sciences?",
     a: "Yes, the curriculum includes an internship component during the semester.",
   },
   {
-    q: "Can I switch my specialization after taking admission at Sandip University’s School of Pharmaceutical Science?",
-    a: "Yes, since the 1st year in Design is a foundation year, students can change their specialization depending on seat availability.",
+    q: "What is the course duration of the M.sc. program at Sandip University?",
+    a: "The M.sc program is a 2-years course.",
   },
   {
-    q: "What is the course duration of the B.Pharm. program at Sandip University?",
-    a: "The B. Pharm program is a 4-year course.",
+    q: "What is the course duration of the B.sc. program at Sandip University?",
+    a: "The B. sc program is a 3-years course.",
   },
   {
     q: "What is the average salary package for design graduates from Sandip University?",

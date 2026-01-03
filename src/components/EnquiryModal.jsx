@@ -62,7 +62,7 @@ export default function EnquiryForm({ open = true, onClose }) {
       .post("https://onlinepayments.sandipuniversity.com/Api/get_course_details_for_forms", {
         campus: "nashik",
         year: "2026",
-        school_code: "1010",
+        school_code: "1006",
       })
       .then((res) => res.data.status && setCourses(res.data.data || []))
       .catch((err) => console.error("Courses API Error:", err));
@@ -99,7 +99,7 @@ export default function EnquiryForm({ open = true, onClose }) {
     try {
       const res = await axios.post(
         "https://onlinepayments.sandipuniversity.com/Api/get_stream_details_for_forms",
-        { school_code: "1010", course_id: courseId, campus: "nashik", year: "2026" }
+        { school_code: "1006", course_id: courseId, campus: "nashik", year: "2026" }
       );
       const streams = res.data.data?.streams || res.data.data || [];
       setSpecializations(streams);
@@ -177,7 +177,7 @@ export default function EnquiryForm({ open = true, onClose }) {
       state: form.state,
       city: form.city,
       campus: "N",
-      school: "10",
+      school: "6",
       course: form.course,
       specialization: form.specialization,
       fullName: form.fullName,
@@ -201,7 +201,7 @@ export default function EnquiryForm({ open = true, onClose }) {
 
       if (res.data.status || res.data.success) {
         alert("Form Submitted Successfully!");
-        window.location.href = "https://www.sandipuniversity.edu.in/thankyoupages/thankyousops.php";
+        window.location.href = "https://www.sandipuniversity.edu.in/thankyoupages/thankyousos.php";
       } else if (res.data.message?.toLowerCase().includes("already")) {
         alert("This mobile number is already registered! Cannot submit.");
       } else {
