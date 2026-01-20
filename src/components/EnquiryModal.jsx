@@ -7,7 +7,6 @@ import axios from "axios";
 export default function EnquiryForm({ open = true, onClose }) {
   if (!open) return null;
 
-  // ---------------- FORM STATE ----------------
   const [form, setForm] = useState({
     fullName: "",
     email: "",
@@ -27,9 +26,9 @@ export default function EnquiryForm({ open = true, onClose }) {
 
   const [otpSent, setOtpSent] = useState(false);
   const [otpVerified, setOtpVerified] = useState(false);
-  const [timer, setTimer] = useState(0); // Resend OTP countdown
+  const [timer, setTimer] = useState(0);
+  const [sentMobile, setSentMobile] = useState(""); 
 
-  // ---------------- DYNAMIC UTM & LEAD SOURCE ----------------
   const [utmParams, setUtmParams] = useState({
     lead_source: "website",
     utm_source: "organic",
@@ -37,9 +36,14 @@ export default function EnquiryForm({ open = true, onClose }) {
     utm_campaign: "organic",
     urlpath: window.location.href,
   });
-  // ⭐ PAGE URL
-  const pageURL = window.location.href;
-  // Auto-capture UTM params from URL
+
+  const [message, setMessage] = useState({ text: "", type: "" }); // type: success | danger
+
+  const isValidName = (name) => /^[A-Za-z ]+$/.test(name.trim());
+  const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+  const isValidMobile = (mobile) => /^[0-9]{10}$/.test(mobile);
+  const isValidOtp = (otp) => /^[0-9]{4,6}$/.test(otp);
+
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     setUtmParams({
@@ -51,12 +55,12 @@ export default function EnquiryForm({ open = true, onClose }) {
     });
   }, []);
 
-  // ---------------- LOAD STATES & COURSES ----------------
+  // Fetch states and courses
   useEffect(() => {
     axios
       .post("https://onlinepayments.sandipuniversity.com/Api/get_states_for_forms")
       .then((res) => res.data.status && setStates(res.data.data || []))
-      .catch((err) => console.error("States API Error:", err));
+      .catch(console.error);
 
     axios
       .post("https://onlinepayments.sandipuniversity.com/Api/get_course_details_for_forms", {
@@ -65,114 +69,126 @@ export default function EnquiryForm({ open = true, onClose }) {
         school_code: "1006",
       })
       .then((res) => res.data.status && setCourses(res.data.data || []))
-      .catch((err) => console.error("Courses API Error:", err));
+      .catch(console.error);
   }, []);
 
-  // ---------------- HANDLE INPUT CHANGE ----------------
+  // Input change handler
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+    let { name, value, type, checked } = e.target;
+
+    if (name === "mobile") {
+      value = value.replace(/[^0-9]/g, "");
+      if (otpSent && value !== sentMobile) {
+        // Reset OTP if mobile changes
+        setOtpSent(false);
+        setOtpVerified(false);
+        setForm({ ...form, mobile: value, otp: "" });
+        return;
+      }
+    }
+
+    if (name === "otp") value = value.replace(/[^0-9]/g, "");
+    if (name === "fullName") value = value.replace(/[^A-Za-z ]/g, "");
+
     setForm({ ...form, [name]: type === "checkbox" ? checked : value });
   };
 
-  // ---------------- LOAD CITIES ----------------
   const handleStateChange = async (e) => {
     const stateId = e.target.value;
     setForm({ ...form, state: stateId, city: "" });
-
     try {
-      const res = await axios.post(
-        "https://onlinepayments.sandipuniversity.com/Api/get_cities_by_state_for_forms",
-        { state_id: stateId }
-      );
+      const res = await axios.post("https://onlinepayments.sandipuniversity.com/Api/get_cities_by_state_for_forms", { state_id: stateId });
       setCities(res.data.status ? res.data.data : []);
-    } catch (err) {
-      console.error("Cities API Error:", err);
+    } catch {
       setCities([]);
     }
   };
 
-  // ---------------- LOAD SPECIALIZATIONS ----------------
   const handleCourseChange = async (e) => {
     const courseId = e.target.value;
     setForm({ ...form, course: courseId, specialization: "" });
-
     try {
       const res = await axios.post(
         "https://onlinepayments.sandipuniversity.com/Api/get_stream_details_for_forms",
         { school_code: "1006", course_id: courseId, campus: "nashik", year: "2026" }
       );
-      const streams = res.data.data?.streams || res.data.data || [];
-      setSpecializations(streams);
-    } catch (err) {
-      console.error("Specialization API Error:", err);
+      setSpecializations(res.data.data?.streams || res.data.data || []);
+    } catch {
       setSpecializations([]);
     }
   };
 
-  // ---------------- SEND OTP ----------------
+  // Send OTP
   const sendOtp = async () => {
-    if (!form.mobile || form.mobile.length !== 10) return alert("Enter valid 10-digit mobile number");
+    setMessage({ text: "", type: "" });
+    if (!isValidMobile(form.mobile)) {
+      setMessage({ text: "Enter valid 10-digit mobile number.", type: "danger" });
+      return;
+    }
 
     try {
-      const res = await axios.post("https://onlinepayments.sandipuniversity.com/Api/send_otp_for_forms", {
-        mobile: form.mobile,
-      });
-
+      const res = await axios.post("https://onlinepayments.sandipuniversity.com/Api/send_otp_for_forms", { mobile: form.mobile });
       if (res.data.status || res.data.success) {
         setOtpSent(true);
-        setTimer(30); // Start 30s countdown for resend
-        alert("OTP Sent Successfully!");
-      } else if (
-        res.data.message?.toLowerCase().includes("already") ||
-        res.data.error?.toLowerCase().includes("already") ||
-        res.data.msg?.toLowerCase().includes("already")
-      ) {
-        alert("This mobile number is already registered!");
+        setSentMobile(form.mobile);
+        setTimer(30);
+        setOtpVerified(false);
+        setForm({ ...form, otp: "" });
+        setMessage({ text: "OTP sent successfully.", type: "success" });
       } else {
-        alert("Failed to send OTP. Try again.");
+        setMessage({ text: res.data.message || "Failed to send OTP.", type: "danger" });
       }
-    } catch (err) {
-      console.error("Send OTP Error:", err);
-      alert("Error sending OTP");
+    } catch {
+      setMessage({ text: "Error sending OTP. Try again.", type: "danger" });
     }
   };
 
-  // ---------------- OTP TIMER EFFECT ----------------
+  // Countdown timer
   useEffect(() => {
-    if (timer === 0) return;
+    if (!timer) return;
     const interval = setInterval(() => setTimer((t) => t - 1), 1000);
     return () => clearInterval(interval);
   }, [timer]);
 
-  // ---------------- VERIFY OTP ----------------
+  // Verify OTP
   const verifyOtp = async () => {
-    if (!form.otp) return alert("Enter OTP");
+    setMessage({ text: "", type: "" });
+    if (!isValidOtp(form.otp)) {
+      setMessage({ text: "Enter a valid OTP.", type: "danger" });
+      return;
+    }
+    if (form.mobile !== sentMobile) {
+      setMessage({ text: "OTP was sent to a different mobile number.", type: "danger" });
+      return;
+    }
 
     try {
-      const res = await axios.post("https://onlinepayments.sandipuniversity.com/Api/verify_otp_for_forms", {
-        mobile: form.mobile,
-        otp: form.otp,
-      });
-
+      const res = await axios.post("https://onlinepayments.sandipuniversity.com/Api/verify_otp_for_forms", { mobile: form.mobile, otp: form.otp });
       if (res.data.status || res.data.success) {
         setOtpVerified(true);
-        alert("OTP Verified Successfully!");
+        setMessage({ text: "OTP verified successfully.", type: "success" });
       } else {
-        alert("Invalid OTP");
+        setOtpVerified(false);
+        setMessage({ text: res.data.message || "Invalid OTP.", type: "danger" });
       }
-    } catch (err) {
-      console.error("Verify OTP Error:", err); 
-      alert("Error verifying OTP");
+    } catch {
+      setOtpVerified(false);
+      setMessage({ text: "Error verifying OTP.", type: "danger" });
     }
   };
 
-  // ---------------- SUBMIT FORM ----------------
+  // Submit form
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!otpVerified) return alert("Please verify OTP first.");
+    setMessage({ text: "", type: "" });
+
+    if (!isValidName(form.fullName)) return setMessage({ text: "Full Name should contain only alphabets.", type: "danger" });
+    if (!isValidEmail(form.email)) return setMessage({ text: "Enter valid email address.", type: "danger" });
+    if (!isValidMobile(form.mobile)) return setMessage({ text: "Enter valid 10-digit mobile number.", type: "danger" });
+    if (!otpVerified) return setMessage({ text: "OTP is not verified. Cannot submit form.", type: "danger" });
 
     const payload = {
-      academic_year: "2026-27", 
+      academic_year: "2026-27",
       country: "101",
       state: form.state,
       city: form.city,
@@ -188,90 +204,62 @@ export default function EnquiryForm({ open = true, onClose }) {
       utm_source: utmParams.utm_source,
       utm_medium: utmParams.utm_medium,
       utm_campaign: utmParams.utm_campaign,
-      urlpath: utmParams.urlpath, // Hidden page URL
+      urlpath: utmParams.urlpath,
       consent: form.consent,
     };
 
     try {
-      const res = await axios.post(
-        "https://onlinepayments.sandipuniversity.com/Api/save_form_data",
-        payload,
-        { headers: { "Content-Type": "application/json" } }
-      );
-
+      const res = await axios.post("https://onlinepayments.sandipuniversity.com/Api/save_form_data", payload);
       if (res.data.status || res.data.success) {
-        alert("Form Submitted Successfully!");
-        window.location.href = "https://www.sandipuniversity.edu.in/thankyoupages/thankyousos.php";
-      } else if (res.data.message?.toLowerCase().includes("already")) {
-        alert("This mobile number is already registered! Cannot submit.");
+        setMessage({ text: "Form submitted successfully!", type: "success" });
+        setTimeout(() => {
+          window.location.href = "https://www.sandipuniversity.edu.in/thankyoupages/thankyousos.php";
+        }, 1500);
       } else {
-        console.log("Submit API Response:", res.data);
-        alert("Failed to submit form. Check console.");
+        setMessage({ text: res.data.message || "Failed to submit form.", type: "danger" });
       }
-    } catch (err) {
-      console.error("Submit Form Error:", err);
-      alert("Error submitting form. Check console.");
+    } catch {
+      setMessage({ text: "Error submitting form.", type: "danger" });
     }
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className="fixed inset-0 bg-black/40 backdrop-blur-md z-[999] flex justify-center items-center px-4"
-    >
-      <motion.div
-        initial={{ scale: 0.9, opacity: 0, y: 20 }}
-        animate={{ scale: 1, opacity: 1, y: 0 }}
-        transition={{ duration: 0.25 }}
-        className="w-full max-w-xl bg-white rounded-2xl shadow-2xl p-8 relative"
-      >
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 text-gray-500 hover:text-red-500 text-xl"
-        >
+    <motion.div className="fixed inset-0 bg-black/40 backdrop-blur-md z-[999] flex justify-center items-center px-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+      <motion.div initial={{ scale: 0.9, opacity: 0, y: 20 }} animate={{ scale: 1, opacity: 1, y: 0 }} transition={{ duration: 0.25 }} className="w-full max-w-xl bg-white rounded-2xl shadow-2xl p-8 relative">
+        <button onClick={onClose} className="absolute top-4 right-4 text-gray-500 hover:text-red-500 text-xl">
           <FontAwesomeIcon icon={faTimes} />
         </button>
 
-        <h2 className="text-2xl font-semibold text-gray-800 text-center mb-6">
-          Enquiry Form
-        </h2>
+        <h2 className="text-2xl font-semibold text-gray-800 text-center mb-4">Enquiry Form</h2>
+
+        {/* ALERT MESSAGE */}
+        {message.text && (
+          <div className={`mb-4 px-4 py-2 rounded text-sm ${message.type === "success" ? "bg-green-500 text-white" : "bg-red-500 text-white"}`}>
+            {message.text}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-800">
-          {/* Hidden Fields */}
-          <input type="hidden" name="lead_source" value={utmParams.lead_source} />
-          <input type="hidden" name="utm_source" value={utmParams.utm_source} />
-          <input type="hidden" name="utm_medium" value={utmParams.utm_medium} />
-          <input type="hidden" name="utm_campaign" value={utmParams.utm_campaign} />
-          <input type="hidden" name="urlpath" value={utmParams.urlpath} />
-          <input type="hidden" name="country" value="101" />
-          <input type="hidden" name="campus_id" value="1" />
-          <input type="hidden" name="campus" value="N" />
-                   {/* Hidden submitted page URL */}
-          <input type="hidden" name="urlpath" value={pageURL} />
-
-          {/* Input Fields */}
           <input className="google-input" placeholder="Full Name *" name="fullName" value={form.fullName} onChange={handleChange} required />
           <input className="google-input" placeholder="Email Address *" name="email" value={form.email} onChange={handleChange} required />
 
-          {/* OTP Section */}
           <div className="flex items-center gap-3 md:col-span-2">
-            <input className="google-input w-full" placeholder="Mobile Number *" name="mobile" value={form.mobile} onChange={handleChange} required />
+            <input className="google-input w-full" placeholder="Mobile Number *" name="mobile" value={form.mobile} onChange={handleChange} required disabled={otpSent} />
             <input className="google-input w-28" placeholder="OTP *" name="otp" value={form.otp} onChange={handleChange} />
 
             {!otpSent ? (
-              <button type="button" onClick={sendOtp} className="px-4 py-2 bg-blue-700 text-white rounded">Get OTP</button>
+              <button type="button" onClick={sendOtp} className="px-6 py-2 bg-blue-700 text-white rounded">Get OTP</button>
             ) : !otpVerified ? (
               <>
-                <button type="button" onClick={verifyOtp} className="px-4 py-2 bg-green-700 text-white rounded">Verify</button>
-                {timer > 0 ? (
-                  <span className="text-yellow-600 px-2">{`Resend in ${timer}s`}</span>
+                <button type="button" onClick={verifyOtp} className="px-6 py-2 bg-green-700 text-white rounded">Verify</button>
+                {timer === 0 ? (
+                  <button type="button" onClick={sendOtp} className="px-5 py-2 bg-red-600 text-white rounded">Resend</button>
                 ) : (
-                  <button type="button" onClick={sendOtp} className="px-4 py-2 bg-red-600 text-white rounded">Resend OTP</button>
+                  <span className="text-yellow-500 text-xs">Resend in {timer}s</span>
                 )}
               </>
             ) : (
-              <span className="text-green-500 font-bold">✔</span>
+              <span className="text-green-600 font-bold">✔</span>
             )}
           </div>
 
@@ -286,12 +274,12 @@ export default function EnquiryForm({ open = true, onClose }) {
           </select>
 
           <select className="google-input" name="course" value={form.course} onChange={handleCourseChange} required>
-            <option value="">Select Course</option>
+            <option value="">Select Course*</option>
             {courses.map((c) => (<option key={c.course_id} value={c.course_id}>{c.course_name}</option>))}
           </select>
 
           <select className="google-input" name="specialization" value={form.specialization} onChange={handleChange} required>
-            <option value="">Select Specialization</option>
+            <option value="">Select Specialization*</option>
             {specializations.map((s) => (<option key={s.stream_id} value={s.stream_id}>{s.stream_name}</option>))}
           </select>
 
@@ -300,7 +288,7 @@ export default function EnquiryForm({ open = true, onClose }) {
             By submitting this form, I consent to receive communications from the University.
           </label>
 
-          <button type="submit" className="w-full py-2 md:col-span-2 bg-blue-600 hover:bg-blue-700 transition text-white font-semibold rounded-lg text-sm shadow-md mt-2">
+          <button type="submit" disabled={!otpVerified} className={`w-full py-2 md:col-span-2 text-white font-semibold rounded-lg text-sm shadow-md mt-2 ${otpVerified ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-400 cursor-not-allowed'}`}>
             Submit
           </button>
         </form>

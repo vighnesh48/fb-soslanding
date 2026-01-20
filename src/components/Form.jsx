@@ -22,21 +22,32 @@ const Form = () => {
 
   const [otpSent, setOtpSent] = useState(false);
   const [otpVerified, setOtpVerified] = useState(false);
-
-  // ⭐ RESEND OTP TIMER
   const [timer, setTimer] = useState(0);
 
-  // ⭐ UTM Parameters
+  const [message, setMessage] = useState({ text: "", type: "" }); // type: success | danger
+
   const [utmParams, setUtmParams] = useState({
     lead_source: "website",
     utm_campaign: "organic",
     utm_medium: "enquiryform",
   });
 
-  // ⭐ PAGE URL
   const pageURL = window.location.href;
 
-  // ---------------- LOAD UTM PARAMETERS ----------------
+  // ---------------- VALIDATION ----------------
+  const isValidName = (name) => /^[A-Za-z ]+$/.test(name.trim());
+  const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+  const isValidMobile = (mobile) => /^[0-9]{10}$/.test(mobile);
+  const isValidOtp = (otp) => /^[0-9]{4,6}$/.test(otp);
+
+  const handleChange = (e) => {
+    let { name, value, type, checked } = e.target;
+    if (name === "mobile" || name === "otp") value = value.replace(/[^0-9]/g, "");
+    if (name === "fullName") value = value.replace(/[^A-Za-z ]/g, "");
+    setForm({ ...form, [name]: type === "checkbox" ? checked : value });
+  };
+
+  // ---------------- UTM ----------------
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     setUtmParams({
@@ -63,51 +74,39 @@ const Form = () => {
       .catch((err) => console.error("Courses API Error:", err));
   }, []);
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setForm({ ...form, [name]: type === "checkbox" ? checked : value });
-  };
-
   // ---------------- LOAD CITIES ----------------
-  const handleStateChange = async (e) => {
+  const handleStateChange = (e) => {
     const stateId = e.target.value;
     setForm({ ...form, state: stateId, city: "" });
-
-    try {
-      const res = await axios.post(
-        "https://onlinepayments.sandipuniversity.com/Api/get_cities_by_state_for_forms",
-        { state_id: stateId }
-      );
-      setCities(res.data.status ? res.data.data : []);
-    } catch (err) {
-      console.error("Cities API Error:", err);
-      setCities([]);
-    }
+    axios
+      .post("https://onlinepayments.sandipuniversity.com/Api/get_cities_by_state_for_forms", { state_id: stateId })
+      .then((res) => setCities(res.data.status ? res.data.data : []))
+      .catch(() => setCities([]));
   };
 
   // ---------------- LOAD SPECIALIZATIONS ----------------
   const handleCourseChange = async (e) => {
     const courseId = e.target.value;
     setForm({ ...form, course: courseId, specialization: "" });
-
     try {
       const res = await axios.post(
         "https://onlinepayments.sandipuniversity.com/Api/get_stream_details_for_forms",
         { school_code: "1006", course_id: courseId, campus: "nashik", year: "2026" }
       );
-
       const streams = res.data.data?.streams || res.data.data || [];
       setSpecializations(streams);
-    } catch (err) {
-      console.error("Specialization API Error:", err);
+    } catch {
       setSpecializations([]);
     }
   };
 
   // ---------------- SEND OTP ----------------
   const sendOtp = async () => {
-    if (!form.mobile || form.mobile.length !== 10) {
-      return alert("Enter valid 10-digit mobile number");
+    setMessage({ text: "", type: "" });
+
+    if (!isValidMobile(form.mobile)) {
+      setMessage({ text: "Enter valid 10-digit mobile number.", type: "danger" });
+      return;
     }
 
     try {
@@ -118,33 +117,24 @@ const Form = () => {
 
       if (res.data.status || res.data.success) {
         setOtpSent(true);
-        setTimer(30); // ⭐ Start 30 sec timer
-        alert("OTP Sent Successfully!");
-      } else if (
-        res.data.message?.toLowerCase().includes("already") ||
-        res.data.error?.toLowerCase().includes("already") ||
-        res.data.msg?.toLowerCase().includes("already")
-      ) {
-        alert("This mobile number is already registered!");
+        setTimer(30);
+        setMessage({ text: "OTP sent successfully.", type: "success" });
       } else {
-        alert("Failed to send OTP. Try again.");
+        setMessage({ text: res.data.message || "Failed to send OTP.", type: "danger" });
       }
-    } catch (err) {
-      console.error("Send OTP Error:", err);
-      alert("Error sending OTP");
+    } catch {
+      setMessage({ text: "Error sending OTP. Please try again.", type: "danger" });
     }
   };
 
-  // ⭐ RESEND OTP TIMER EFFECT
-  useEffect(() => {
-    if (timer === 0) return;
-    const interval = setInterval(() => setTimer((t) => t - 1), 1000);
-    return () => clearInterval(interval);
-  }, [timer]);
-
   // ---------------- VERIFY OTP ----------------
   const verifyOtp = async () => {
-    if (!form.otp) return alert("Enter OTP");
+    setMessage({ text: "", type: "" });
+
+    if (!isValidOtp(form.otp)) {
+      setMessage({ text: "Enter valid numeric OTP.", type: "danger" });
+      return;
+    }
 
     try {
       const res = await axios.post(
@@ -154,21 +144,41 @@ const Form = () => {
 
       if (res.data.status || res.data.success) {
         setOtpVerified(true);
-        alert("OTP Verified Successfully!");
+        setMessage({ text: "OTP verified successfully.", type: "success" });
       } else {
-        alert("Invalid OTP");
+        setMessage({ text: res.data.message || "Invalid OTP.", type: "danger" });
       }
-    } catch (err) {
-      console.error("Verify OTP Error:", err);
-      alert("Error verifying OTP");
+    } catch {
+      setMessage({ text: "Error verifying OTP.", type: "danger" });
     }
   };
+
+  // ---------------- TIMER ----------------
+  useEffect(() => {
+    if (timer === 0) return;
+    const interval = setInterval(() => setTimer((t) => t - 1), 1000);
+    return () => clearInterval(interval);
+  }, [timer]);
+
+ // ---------------- GOOGLE ADS CONVERSION ----------------
+  const gtag_report_conversion = () => {
+    if (window.gtag) {
+      window.gtag("event", "conversion", {
+        send_to: "'AW-17751427077/m8ecCN-tlcobEIWQxZBC',",
+      });
+    }
+  };
+
 
   // ---------------- SUBMIT FORM ----------------
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setMessage({ text: "", type: "" });
 
-    if (!otpVerified) return alert("Please verify OTP first.");
+    if (!isValidName(form.fullName)) return setMessage({ text: "Full Name should contain only alphabets.", type: "danger" });
+    if (!isValidEmail(form.email)) return setMessage({ text: "Enter valid email address.", type: "danger" });
+    if (!isValidMobile(form.mobile)) return setMessage({ text: "Enter valid 10-digit mobile number.", type: "danger" });
+    if (!otpVerified) return setMessage({ text: "Please verify OTP before submitting.", type: "danger" });
 
     const payload = {
       academic_year: "2026-27",
@@ -183,36 +193,25 @@ const Form = () => {
       email: form.email,
       mobile: form.mobile,
       campus_id: "1",
-
-      // ⭐ UTM Parameters
       lead_source: utmParams.lead_source,
-      utm_campaign: utmParams.utm_campaign, 
+      utm_campaign: utmParams.utm_campaign,
       utm_medium: utmParams.utm_medium,
-
-      // ⭐ PAGE URL
       urlpath: pageURL,
-
-      consent: form.consent, 
+      consent: form.consent,
     };
 
     try {
-      const res = await axios.post(
-        "https://onlinepayments.sandipuniversity.com/Api/save_form_data",
-        payload,
-        { headers: { "Content-Type": "application/json" } }
-      );
-
+      const res = await axios.post("https://onlinepayments.sandipuniversity.com/Api/save_form_data", payload);
       if (res.data.status || res.data.success) {
-        alert("Form Submitted Successfully!");
-       window.location.href = "https://www.sandipuniversity.edu.in/thankyoupages/thankyousops.php";
-      } else if (res.data.message?.toLowerCase().includes("already")) {
-        alert("This mobile number is already registered! Cannot submit.");
+        setMessage({ text: "Form submitted successfully!", type: "success" });
+        setTimeout(() => {
+          window.location.href = "https://www.sandipuniversity.edu.in/thankyoupages/thankyousos.php";
+        }, 1500);
       } else {
-        alert("Failed to submit form. Check console.");
+        setMessage({ text: res.data.message || "Failed to submit form.", type: "danger" });
       }
-    } catch (err) {
-      console.error("Submit Form Error:", err);
-      alert("Error submitting form.");
+    } catch {
+      setMessage({ text: "Error submitting form.", type: "danger" });
     }
   };
 
@@ -220,85 +219,41 @@ const Form = () => {
     <motion.div
       initial={{ opacity: 0, x: 40 }}
       animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.7 }}
+      transition={{ duration: 0.6 }}
       className="lg:col-span-5 col-span-12 w-full md:flex hidden justify-center lg:justify-end"
     >
-      <div className="bg-white/20 backdrop-blur-xl shadow-2xl rounded-2xl p-4 sm:p-6 w-full max-w-xs sm:max-w-md border border-white/10">
-        <h2 className="text-base sm:text-xl font-semibold text-white text-center mb-4 animate-pulse">
-          Apply Now
-        </h2>
+      <div className="bg-white/20 backdrop-blur-xl shadow-xl rounded-2xl p-6 w-full max-w-md border border-white/10">
+        <h2 className="text-xl font-semibold text-white text-center mb-4">Apply Now</h2>
 
-        <form className="grid grid-cols-1 gap-3 text-sm" onSubmit={handleSubmit}>
-          
-          {/* HIDDEN FIELDS */}
-          <input type="hidden" name="leadFrm" value="post" />
-          <input type="hidden" name="lead_source" value={utmParams.lead_source} />
-          <input type="hidden" name="utm_campaign" value={utmParams.utm_campaign} />
-          <input type="hidden" name="utm_medium" value={utmParams.utm_medium} />
-          <input type="hidden" name="country" value="101" />
-          <input type="hidden" name="campus_id" value="1" />
-          <input type="hidden" name="campus" value="N" />
+        {/* ALERT MESSAGE */}
+        {message.text && (
+          <div
+            className={`text-sm mb-2 px-4 py-2 rounded ${
+              message.type === "success"
+                ? "bg-green-500 text-white"
+                : "bg-red-500 text-white"
+            }`}
+            role="alert"
+          >
+            {message.text}
+          </div>
+        )}
 
-          {/* Hidden submitted page URL */}
-          <input type="hidden" name="urlpath" value={pageURL} />
+        <form className="grid grid-cols-1 gap-3" onSubmit={handleSubmit}>
+          <input className="hero-input" placeholder="Full Name *" name="fullName" value={form.fullName} onChange={handleChange} required />
+          <input className="hero-input" placeholder="Email Address *" name="email" value={form.email} onChange={handleChange} required />
+          <input className="hero-input" placeholder="Mobile Number *" maxLength="10" name="mobile" value={form.mobile} onChange={handleChange} required />
 
-          {/* NAME */}
-          <input
-            className="hero-input"
-            placeholder="Full Name *"
-            name="fullName"
-            value={form.fullName}
-            onChange={handleChange}
-            required
-          />
-
-          {/* EMAIL */}
-          <input
-            className="hero-input"
-            placeholder="Email Address *"
-            name="email"
-            value={form.email}
-            onChange={handleChange}
-            required
-          />
-
-          {/* MOBILE */}
-          <input
-            className="hero-input"
-            placeholder="Mobile Number *"
-            name="mobile"
-            value={form.mobile}
-            onChange={handleChange}
-            required
-          />
-
-          {/* OTP SECTION */}
+          {/* OTP */}
           <div className="flex items-center gap-3">
-            <input
-              className="hero-input flex-1"
-              placeholder="Enter OTP *"
-              name="otp"
-              value={form.otp}
-              onChange={handleChange}
-            />
-
+            <input className="hero-input flex-1" placeholder="Enter OTP *" maxLength="6" name="otp" value={form.otp} onChange={handleChange} />
             {!otpSent ? (
-              // GET OTP BUTTON
-              <button type="button" onClick={sendOtp} className="px-8 py-2 bg-blue-700 text-white rounded">
-                Get OTP
-              </button>
+              <button type="button" onClick={sendOtp} className="px-6 py-2 bg-blue-700 text-white rounded">Get OTP</button>
             ) : !otpVerified ? (
               <>
-                {/* VERIFY BUTTON */}
-                <button type="button" onClick={verifyOtp} className="px-8 py-2 bg-green-700 text-white rounded">
-                  Verify
-                </button>
-
-                {/* RESEND OTP */}
+                <button type="button" onClick={verifyOtp} className="px-6 py-2 bg-green-700 text-white rounded">Verify</button>
                 {timer === 0 ? (
-                  <button type="button" onClick={sendOtp} className="px-6 py-2 bg-red-600 text-white rounded">
-                    Resend OTP
-                  </button>
+                  <button type="button" onClick={sendOtp} className="px-5 py-2 bg-red-600 text-white rounded">Resend</button>
                 ) : (
                   <span className="text-yellow-300 text-xs">Resend in {timer}s</span>
                 )}
@@ -308,57 +263,33 @@ const Form = () => {
             )}
           </div>
 
-          {/* STATE + CITY */}
           <div className="grid grid-cols-2 gap-3">
             <select className="hero-input" name="state" value={form.state} onChange={handleStateChange} required>
-              <option value="">Select State</option>
-              {states.map((s) => (
-                <option key={s.id} value={s.id}>
-                  {s.name}
-                </option>
-              ))}
+              <option value="">Select State*</option>
+              {states.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
             </select>
-
             <select className="hero-input" name="city" value={form.city} onChange={handleChange} required>
-              <option value="">Select City</option>
-              {cities.map((c) => (
-                <option key={c.id} value={c.id}>
-                  {c.name}
-                </option>
-              ))}
+              <option value="">Select City*</option>
+              {cities.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
             </select>
           </div>
 
-          {/* COURSE */}
           <select className="hero-input" name="course" value={form.course} onChange={handleCourseChange} required>
-            <option value="">Select Course</option>
-            {courses.map((c) => (
-              <option key={c.course_id} value={c.course_id}>
-                {c.course_name}
-              </option>
-            ))}
+            <option value="">Select Course*</option>
+            {courses.map((c) => <option key={c.course_id} value={c.course_id}>{c.course_name}</option>)}
           </select>
 
-          {/* SPECIALIZATION */}
           <select className="hero-input" name="specialization" value={form.specialization} onChange={handleChange} required>
-            <option value="">Select Specialization</option>
-            {specializations.map((s) => (
-              <option key={s.stream_id} value={s.stream_id}>
-                {s.stream_name}
-              </option>
-            ))}
+            <option value="">Select Specialization*</option>
+            {specializations.map((s) => <option key={s.stream_id} value={s.stream_id}>{s.stream_name}</option>)}
           </select>
 
-          {/* CONSENT */}
           <label className="flex items-start gap-2 text-xs text-gray-200">
             <input type="checkbox" name="consent" checked={form.consent} onChange={handleChange} required />
             I consent to receive communication from university.
           </label>
 
-          {/* SUBMIT BUTTON */}
-          <button type="submit" className="w-full py-2 bg-blue-600 text-white rounded shadow">
-            Submit
-          </button>
+          <button type="submit" className="w-full py-2 bg-blue-600 text-white rounded">Submit</button>
         </form>
       </div>
     </motion.div>

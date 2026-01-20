@@ -158,10 +158,10 @@ export default function Footer() {
       <div className="leading-relaxed">
         <p className="font-medium text-white">Toll-Free Number:</p>
         <a
-          href="tel:18002122714"
+          href="tel:18001212714"
           className=" decoration-blue-400"
         >
-          1800-212-2714
+          1800-121-2714
         </a>
       </div>
     </li>
@@ -172,10 +172,10 @@ export default function Footer() {
       <div className="leading-relaxed">
         <p className="font-medium text-white">Mobile Number:</p>
         <a
-          href="tel:+919545453092"
+          href="tel:+918956374111"
           className=" decoration-blue-400"
         >
-          +91 9545453092
+          +91 8956374111
         </a>
       </div>
     </li>
@@ -188,7 +188,7 @@ export default function Footer() {
         {/* DIVIDER */}
         <div className="border-t border-gray-700 mt-4 pt-2 text-center">
           <p className="text-gray-500 text-sm">
-            © {new Date().getFullYear()} YourBrand. All rights reserved.
+            © {new Date().getFullYear()} Sandip University. All rights reserved.
           </p>
         </div>
       </div>
