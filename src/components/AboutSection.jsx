@@ -5,8 +5,11 @@ import {
   faTools,
   faGlobe,
   faArrowRight,
+  faHome,
 } from "@fortawesome/free-solid-svg-icons";
 import EnquiryModal from "./EnquiryModal";
+import { faServicestack } from "@fortawesome/free-brands-svg-icons/faServicestack";
+import { faIndustry } from "@fortawesome/free-solid-svg-icons/faIndustry";
 
 export default function AboutSection() {
     const [openModal, setOpenModal] = useState(false);
@@ -34,9 +37,7 @@ export default function AboutSection() {
             </div>
 
             <p className="mt-3 text-gray-600 leading-relaxed text-sm">
-Science is a vast and diverse field with newer discoveries being made even today. As one of the top science colleges in Maharashtra, Sandip School of Science aims at amplifying the fallible, alive and exciting parts of science through multiple means. One of the most important steps taken is to implement the right curriculum to help students gain a 3600 view of applied sciences.
-Our undergraduate and postgraduate programs are designed to help students become global scientists in the field of their choice. The course structure is focused on balancing academic knowledge with hands-on skills through well-designed laboratories, research opportunities, and industry exposure. Our students gain ample exposure through well-structured activities such as workshops, seminars, expert guest lectures, webinars, field trips and industry visits.
-            </p>
+Sandip University’s School of Science (SOS) is one of the top science colleges in Nashik, offering futuristic scientific programs at the undergraduate and postgraduate levels. The course curriculum of each program is designed in collaboration with top industry experts to ensure a research-based pedagogy. Students gain hands-on skill development opportunities in fully-equipped science labs on campus. Industry exposure is ensured through workshops, seminars, compulsory internships, and industry visits to help students develop technical and soft skills in the long run.          </p>
 
             <ul className="mt-4 space-y-4 text-gray-700">
             
@@ -45,7 +46,7 @@ Our undergraduate and postgraduate programs are designed to help students become
                 <span className="flex items-center justify-center w-7 h-7 bg-white shadow rounded-md">
                   <FontAwesomeIcon icon={faTools} className="text-indigo-600 text-lg" />
                 </span>
-                <span>State-of-the-art labs & expert-led workshops.</span>
+                <span>Value addition and global certifications integrated in the curriculum</span>
               </li>
 
               <li className="flex gap-3">
@@ -53,9 +54,48 @@ Our undergraduate and postgraduate programs are designed to help students become
                   <FontAwesomeIcon icon={faGlobe} className="text-indigo-600 text-lg" />
                 </span>
                 <span>
-                  Cross-disciplinary learning for global & local impact.
+                 One-on-one mentorship and counselling
                 </span>
               </li>
+
+
+
+
+
+
+
+
+ <li className="flex gap-3">
+                <span className="flex items-center justify-center w-7 h-7 bg-white shadow rounded-md">
+                  <FontAwesomeIcon icon={faServicestack}className="text-indigo-600 text-lg" />
+                </span>
+                <span>
+                 One-on-one mentorship and counselling
+                </span>
+              </li>
+
+ <li className="flex gap-3">
+                <span className="flex items-center justify-center w-7 h-7 bg-white shadow rounded-md">
+                  <FontAwesomeIcon icon={faHome} className="text-indigo-600 text-lg" />
+                </span>
+                <span>
+                 Industry connect with top MNCs in the IT sector
+                </span>
+              </li>
+
+
+ <li className="flex gap-3">
+                <span className="flex items-center justify-center w-7 h-7 bg-white shadow rounded-md">
+                  <FontAwesomeIcon icon={faIndustry} className="text-indigo-600 text-lg" />
+                </span>
+                <span>
+                	Compulsory internships
+                </span>
+              </li>
+
+
+
+
             </ul>
 
             {/* BUTTONS */}

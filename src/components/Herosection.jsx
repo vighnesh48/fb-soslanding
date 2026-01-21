@@ -31,10 +31,10 @@ export default function Herosection() {
         >
           <div className="max-w-xl text-center lg:text-left mx-auto lg:mx-0 px-1">
             <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold leading-snug drop-shadow-xl text-white mb-2">
-              Start Your Creative Journey at
+              Inspiring Your Scientific Potential at 
             </h1>
 
-            <span className="text-3xl sm:text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-red-600 to-red-400 bg-clip-text text-transparent tracking-wide drop-shadow-[0_4px_15px_rgba(0,0,0,0.7)] mb-1">
+            <span className="text-3xl sm:text-4xl md:text-4xl font-extrabold bg-gradient-to-r from-red-600 to-red-400 bg-clip-text text-transparent tracking-wide drop-shadow-[0_4px_15px_rgba(0,0,0,0.7)] mb-1">
               Sandip University
             </span>
 
@@ -44,30 +44,24 @@ export default function Herosection() {
               transition={{ duration: 0.6, delay: 0.25 }}
               className="mt-2 mb-6"
             >
-              <span className="text-4xl sm:text-4xl md:text-6xl font-extrabold bg-gradient-to-r from-white to-white bg-clip-text text-transparent tracking-wide drop-shadow-[0_4px_15px_rgba(0,0,0,0.7)]">
-               School of Sciences
+              <span className="text-4xl sm:text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-white to-white bg-clip-text text-transparent tracking-wide drop-shadow-[0_4px_15px_rgba(0,0,0,0.7)]">
+School of Science (SOS)<br/>
+
               </span>
 
               <div className="h-[2px] sm:h-[4px] w-[10rem] sm:w-[18rem] md:w-[32rem] mt-3 mx-auto lg:mx-0 bg-gradient-to-r from-blue-600 to-red-300 rounded-full shadow-lg" />
             </motion.div>
 
-           {/* <p className="text-lg sm:text-base md:text-2xl text-gray-200 mt-4 leading-relaxed drop-shadow-lg">
-              Applications Invited for <span className="font-semibold text-white">SU-DAT 2026</span> <br />
-              <span className="text-base sm:text-base md:text-lg">Entrance Exam Required for Bachelor of Design (B.Des.) Admissions.</span>
+        <p className="text-lg sm:text-base md:text-2xl text-gray-200 mt-4 leading-relaxed drop-shadow-lg">
+              <span className="font-semibold text-white">NAAC Accredited ‘A’ Grade with 3.11 CGPA (1st Cycle)<br/>
+4th Top Ranking Private University in India 
+</span> <br /> <br />
+              <span className="text-base sm:text-base md:text-lg"><b>Approved by UGC | MSBTE | AIU</b></span>
             </p>
-            <div className="mt-5 flex items-center justify-center gap-6 sm:gap-10 bg-black/40 backdrop-blur-xl border border-white/10 px-4 sm:px-6 py-3 rounded-2xl shadow-xl text-white w-full max-w-xs sm:max-w-md mx-auto lg:mx-0">
-              <div className="text-center">
-                <p className="text-[10px] sm:text-[15px] text-gray-100">Last Date to Apply</p>
-                <h3 className="text-sm sm:text-base font-bold">29 Jan 2026</h3>
-              </div>
+            <span className="text-3xl sm:text-4xl md:text-4xl font-extrabold bg-gradient-to-r from-red-600 to-red-400 bg-clip-text text-transparent tracking-wide drop-shadow-[0_4px_15px_rgba(0,0,0,0.7)] mb-1">
+             Admissions Open 2026-27
+            </span>
 
-              <span className="text-gray-400 text-base sm:text-lg font-light">|</span>
-
-              <div className="text-center">
-                <p className="text-[10px] sm:text-[16px] text-gray-100">SU-DAT Exam</p>
-                <h3 className="text-sm sm:text-base font-bold">31 Jan 2026</h3>
-              </div>
-            </div>*/}
 
                <button
                       onClick={() => setOpenModal(true)}

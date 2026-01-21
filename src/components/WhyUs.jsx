@@ -6,10 +6,10 @@ import React, { useState, useEffect } from "react";
 const whyUsData = [
   { value: "250+", label: "Acres Wi-Fi Enabled Campus", icon: <FaWifi size={28} />, bg: "bg-emerald-100", color: "text-emerald-600" },
   { value: "120+", label: "Cutting-edge Programs Offered", icon: <FaBook size={28} />, bg: "bg-blue-100", color: "text-blue-600" },
-  { value: "7+", label: "Specialised Schools", icon: <FaUniversity size={28} />, bg: "bg-orange-100", color: "text-orange-600" },
+  { value: "6+", label: "Specialised Schools", icon: <FaUniversity size={28} />, bg: "bg-orange-100", color: "text-orange-600" },
   { value: "150+", label: "Global Industry Partners", icon: <FaHandshake size={28} />, bg: "bg-purple-100", color: "text-purple-600" },
   { value: "", label: "Curriculum Enhanced with Value Addition Programs", icon: <FaChalkboardTeacher size={28} />, bg: "bg-teal-100", color: "text-teal-600" },
-  { value: "200+", label: "Placement Partners", icon: <FaUsersCog size={28} />, bg: "bg-red-100", color: "text-red-600" },
+  { value: "150+", label: "Placement Partners", icon: <FaUsersCog size={28} />, bg: "bg-red-100", color: "text-red-600" },
   { value: "100%", label: "Placement Assistance", icon: <FaGlobe size={28} />, bg: "bg-yellow-100", color: "text-yellow-600" },
   { value: "10,000+", label: "International Alumni Network", icon: <FaUsersCog size={28} />, bg: "bg-pink-100", color: "text-pink-600" },
 ];
