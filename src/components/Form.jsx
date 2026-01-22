@@ -169,6 +169,27 @@ const Form = () => {
     }
   };
 
+   //handleMobileBlur  function
+
+const handleMobileBlur = async (e) => {
+  const mobile = e.target.value;
+
+  // Check if mobile number is exactly 10 digits
+  if (/^\d{10}$/.test(mobile)) {
+    const page_url = window.location.href;
+
+    try {
+      await axios.post("https://onlinepayments.sandipuniversity.com/Api/save_mobile_lead", {
+        mobile,
+        page_url,
+      });
+
+      console.log("Page URL sent successfully");
+    } catch (error) {
+      console.error("Error sending page URL", error);
+    }
+  }
+};
 
   // ---------------- SUBMIT FORM ----------------
   const handleSubmit = async (e) => {
@@ -242,7 +263,7 @@ const Form = () => {
         <form className="grid grid-cols-1 gap-3" onSubmit={handleSubmit}>
           <input className="hero-input" placeholder="Full Name *" name="fullName" value={form.fullName} onChange={handleChange} required />
           <input className="hero-input" placeholder="Email Address *" name="email" value={form.email} onChange={handleChange} required />
-          <input className="hero-input" placeholder="Mobile Number *" maxLength="10" name="mobile" value={form.mobile} onChange={handleChange} required />
+          <input className="hero-input" placeholder="Mobile Number *" maxLength="10" name="mobile" value={form.mobile}    onBlur={handleMobileBlur}  onChange={handleChange} required />
 
           {/* OTP */}
           <div className="flex items-center gap-3">

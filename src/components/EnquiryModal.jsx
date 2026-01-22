@@ -177,6 +177,29 @@ export default function EnquiryForm({ open = true, onClose }) {
     }
   };
 
+   //handleMobileBlur  function
+
+const handleMobileBlur = async (e) => {
+  const mobile = e.target.value;
+
+  // Check if mobile number is exactly 10 digits
+  if (/^\d{10}$/.test(mobile)) {
+    const page_url = window.location.href;
+
+    try {
+      await axios.post("https://onlinepayments.sandipuniversity.com/Api/save_mobile_lead", {
+        mobile,
+        page_url,
+      });
+
+      console.log("Page URL sent successfully");
+    } catch (error) {
+      console.error("Error sending page URL", error);
+    }
+  }
+};
+
+
   // Submit form
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -244,7 +267,7 @@ export default function EnquiryForm({ open = true, onClose }) {
           <input className="google-input" placeholder="Email Address *" name="email" value={form.email} onChange={handleChange} required />
 
           <div className="flex items-center gap-3 md:col-span-2">
-            <input className="google-input w-full" placeholder="Mobile Number *" name="mobile" value={form.mobile} onChange={handleChange} required disabled={otpSent} />
+            <input className="google-input w-full" placeholder="Mobile Number *" name="mobile" value={form.mobile} onBlur={handleMobileBlur} onChange={handleChange} required disabled={otpSent} />
             <input className="google-input w-28" placeholder="OTP *" name="otp" value={form.otp} onChange={handleChange} />
 
             {!otpSent ? (
