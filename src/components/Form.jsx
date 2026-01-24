@@ -305,9 +305,12 @@ const handleMobileBlur = async (e) => {
             {specializations.map((s) => <option key={s.stream_id} value={s.stream_id}>{s.stream_name}</option>)}
           </select>
 
+
+
+           
           <label className="flex items-start gap-2 text-xs text-gray-200">
-            <input type="checkbox" name="consent" checked={form.consent} onChange={handleChange} required />
-            I consent to receive communication from university.
+            <input type="checkbox" name="consent" checked={form.consent} onChange={handleChange} style={{display:'none'}} />
+           By submitting this form, I consent to receive communications from the University through WhatsApp, SMS, email, phone calls, and other channels, even if my number is registered on DND/NDNC.
           </label>
 
           <button type="submit" className="w-full py-2 bg-blue-600 text-white rounded">Submit</button>

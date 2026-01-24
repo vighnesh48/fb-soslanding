@@ -307,8 +307,8 @@ const handleMobileBlur = async (e) => {
           </select>
 
           <label className="flex items-start gap-2 text-xs text-gray-600 md:col-span-2">
-            <input type="checkbox" name="consent" checked={form.consent} onChange={handleChange} required />
-            By submitting this form, I consent to receive communications from the University.
+            <input type="checkbox" name="consent" checked={form.consent} onChange={handleChange} style={{display:'none'}} />
+           By submitting this form, I consent to receive communications from the University through WhatsApp, SMS, email, phone calls, and other channels, even if my number is registered on DND/NDNC.
           </label>
 
           <button type="submit" disabled={!otpVerified} className={`w-full py-2 md:col-span-2 text-white font-semibold rounded-lg text-sm shadow-md mt-2 ${otpVerified ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-400 cursor-not-allowed'}`}>
