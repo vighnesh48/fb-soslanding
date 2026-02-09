@@ -243,78 +243,10 @@ const handleMobileBlur = async (e) => {
       transition={{ duration: 0.6 }}
       className="lg:col-span-5 col-span-12 w-full md:flex hidden justify-center lg:justify-end"
     >
-      <div className="bg-white/20 backdrop-blur-xl shadow-xl rounded-2xl p-6 w-full max-w-md border border-white/10">
+      <div className="bg-white/50 backdrop-blur-xl shadow-xl rounded-2xl p-6 w-full max-w-md border border-white/10">
         <h2 className="text-xl font-semibold text-white text-center mb-4">Apply Now</h2>
+<div class="npf_wgts" data-height="500px" data-w="85ede9b36e7402c8518bc48b83ed8bf7"></div>
 
-        {/* ALERT MESSAGE */}
-        {message.text && (
-          <div
-            className={`text-sm mb-2 px-4 py-2 rounded ${
-              message.type === "success"
-                ? "bg-green-500 text-white"
-                : "bg-red-500 text-white"
-            }`}
-            role="alert"
-          >
-            {message.text}
-          </div>
-        )}
-
-        <form className="grid grid-cols-1 gap-3" onSubmit={handleSubmit}>
-          <input className="hero-input" placeholder="Full Name *" name="fullName" value={form.fullName} onChange={handleChange} required />
-          <input className="hero-input" placeholder="Email Address *" name="email" value={form.email} onChange={handleChange} required />
-          <input className="hero-input" placeholder="Mobile Number *" maxLength="10" name="mobile" value={form.mobile}    onBlur={handleMobileBlur}  onChange={handleChange} required />
-
-          {/* OTP */}
-          <div className="flex items-center gap-3">
-            <input className="hero-input flex-1" placeholder="Enter OTP *" maxLength="6" name="otp" value={form.otp} onChange={handleChange} />
-            {!otpSent ? (
-              <button type="button" onClick={sendOtp} className="px-6 py-2 bg-blue-700 text-white rounded">Get OTP</button>
-            ) : !otpVerified ? (
-              <>
-                <button type="button" onClick={verifyOtp} className="px-6 py-2 bg-green-700 text-white rounded">Verify</button>
-                {timer === 0 ? (
-                  <button type="button" onClick={sendOtp} className="px-5 py-2 bg-red-600 text-white rounded">Resend</button>
-                ) : (
-                  <span className="text-yellow-300 text-xs">Resend in {timer}s</span>
-                )}
-              </>
-            ) : (
-              <span className="text-green-400 font-bold">✔</span>
-            )}
-          </div>
-
-          <div className="grid grid-cols-2 gap-3">
-            <select className="hero-input" name="state" value={form.state} onChange={handleStateChange} required>
-              <option value="">Select State*</option>
-              {states.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
-            </select>
-            <select className="hero-input" name="city" value={form.city} onChange={handleChange} required>
-              <option value="">Select City*</option>
-              {cities.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
-            </select>
-          </div>
-
-          <select className="hero-input" name="course" value={form.course} onChange={handleCourseChange} required>
-            <option value="">Select Course*</option>
-            {courses.map((c) => <option key={c.course_id} value={c.course_id}>{c.course_name}</option>)}
-          </select>
-
-          <select className="hero-input" name="specialization" value={form.specialization} onChange={handleChange} required>
-            <option value="">Select Specialization*</option>
-            {specializations.map((s) => <option key={s.stream_id} value={s.stream_id}>{s.stream_name}</option>)}
-          </select>
-
-
-
-           
-          <label className="flex items-start gap-2 text-xs text-gray-200">
-            <input type="checkbox" name="consent" checked={form.consent} onChange={handleChange} style={{display:'none'}} />
-           By submitting this form, I consent to receive communications from the University through WhatsApp, SMS, email, phone calls, and other channels, even if my number is registered on DND/NDNC.
-          </label>
-
-          <button type="submit" className="w-full py-2 bg-blue-600 text-white rounded">Submit</button>
-        </form>
       </div>
     </motion.div>
   );

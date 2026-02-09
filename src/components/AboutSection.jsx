@@ -7,12 +7,13 @@ import {
   faArrowRight,
   faHome,
 } from "@fortawesome/free-solid-svg-icons";
-import EnquiryModal from "./EnquiryModal";
+import NoPaperFormWidget from "./NoPaperFormWidget";
+
 import { faServicestack } from "@fortawesome/free-brands-svg-icons/faServicestack";
 import { faIndustry } from "@fortawesome/free-solid-svg-icons/faIndustry";
 
 export default function AboutSection() {
-    const [openModal, setOpenModal] = useState(false);
+  const [openApply, setOpenApply] = useState(false);
   
   return (
     <section className="bg-gray-50 text-gray-800 py-5">
@@ -107,7 +108,7 @@ Sandip University’s School of Science (SOS) is one of the top science colleges
               </a>
 
               <button
-              onClick={() => setOpenModal(true)}
+              onClick={() => setOpenApply(true)}
               className="px-4 py-3 rounded-lg border border-gray-300 text-sm hover:bg-gray-100 transition flex items-center justify-center gap-2">
                 Request Brochure
                 <FontAwesomeIcon icon={faArrowRight} />
@@ -150,9 +151,47 @@ Sandip University’s School of Science (SOS) is one of the top science colleges
             </div>
           </div>
         </div>
-      <EnquiryModal open={openModal} onClose={() => setOpenModal(false)} />
-
+     {/* APPLY POPUP */}
+      {openApply && (
+        <div style={overlay}>
+          <div style={modal}>
+            <button onClick={() => setOpenApply(false)} style={closeBtn}>
+              ✖
+            </button>
+             <h2 className="text-xl font-semibold text-black text-center mb-4">Enquire Now</h2>
+            <NoPaperFormWidget />
+          </div>
+        </div>
+      )}
       </div>
     </section>
   );
 }
+/* ---------- MODAL STYLES ---------- */
+
+const overlay = {
+  position: "fixed",
+  inset: 0,
+  background: "rgba(0,0,0,0.6)",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  zIndex: 9999,
+};
+
+const modal = {
+  background: "#fff",
+  padding: "20px",
+  width: "90%",
+  maxWidth: "600px",
+  borderRadius: "10px",
+  position: "relative",
+};
+
+const closeBtn = {
+  position: "absolute",
+  top: "10px",
+  right: "12px",
+  cursor: "pointer",
+  fontSize: "18px",
+};

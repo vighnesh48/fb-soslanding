@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import NoPaperFormWidget from "./NoPaperFormWidget";
 import {
   faArrowRight,
   faCheckCircle,
@@ -8,7 +9,7 @@ import {
   faBriefcase,
   faFileLines
 } from "@fortawesome/free-solid-svg-icons";
-import EnquiryModal from "./EnquiryModal";
+
 
 const courseData = {
   // ============================
@@ -231,7 +232,7 @@ export default function CourseTabs() {
   const [activeSpec, setActiveSpec] = useState(
     Object.keys(courseData["B.sc"].specializations)[0]
   );
-  const [openModal, setOpenModal] = useState(false);
+  const [openApply, setOpenApply] = useState(false);
   // PRELOAD ALL IMAGES (removes first-time lag)
   React.useEffect(() => {
     Object.values(courseData).forEach(item => {
@@ -308,7 +309,7 @@ export default function CourseTabs() {
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              onClick={() => setOpenModal(true)}
+                     onClick={() => setOpenApply(true)}
               className="mt-4 w-full sm:w-auto px-8 py-3 bg-[#0E1B50] text-white rounded-xl font-semibold shadow-lg
             shadow-blue-900/20 hover:shadow-blue-900/40 transition-all flex items-center justify-center gap-2"
             >
@@ -440,8 +441,47 @@ export default function CourseTabs() {
 
 
       </div>
-      <EnquiryModal open={openModal} onClose={() => setOpenModal(false)} />
-
+      {/* APPLY POPUP */}
+      {openApply && (
+        <div style={overlay}>
+          <div style={modal}>
+            <button onClick={() => setOpenApply(false)} style={closeBtn}>
+              ✖
+            </button>
+             <h2 className="text-xl font-semibold text-black text-center mb-4">Enquire Now</h2>
+            <NoPaperFormWidget />
+          </div>
+        </div>
+      )}
     </section>
   );
 }
+
+/* ---------- MODAL STYLES ---------- */
+
+const overlay = {
+  position: "fixed",
+  inset: 0,
+  background: "rgba(0,0,0,0.6)",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  zIndex: 9999,
+};
+
+const modal = {
+  background: "#fff",
+  padding: "20px",
+  width: "90%",
+  maxWidth: "600px",
+  borderRadius: "10px",
+  position: "relative",
+};
+
+const closeBtn = {
+  position: "absolute",
+  top: "10px",
+  right: "12px",
+  cursor: "pointer",
+  fontSize: "18px",
+};

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Form from "./Form";
-import EnquiryModal from "./EnquiryModal";
+import NoPaperFormWidget from "./NoPaperFormWidget";
 
 export default function Herosection() {
-      const [openModal, setOpenModal] = useState(false);
+ const [openApply, setOpenApply] = useState(false);
 
   return (
     <div className="min-h-screen w-full relative overflow-hidden font-sans flex flex-col justify-center items-center mt-[80px]">
@@ -64,7 +64,7 @@ School of Science (SOS)<br/>
 
 
                <button
-                      onClick={() => setOpenModal(true)}
+                onClick={() => setOpenApply(true)}
 
         className="mt-10 px-8 py-3 md:hidden bg-[#0E1B50] text-white rounded-full text-sm font-semibold hover:bg-[#183195] transition">
             Apply Now
@@ -76,8 +76,46 @@ School of Science (SOS)<br/>
 <Form/>
        
       </div>
-                  <EnquiryModal open={openModal} onClose={() => setOpenModal(false)} />
-      
+                  {/* APPLY POPUP */}
+      {openApply && (
+        <div style={overlay}>
+          <div style={modal}>
+            <button onClick={() => setOpenApply(false)} style={closeBtn}>
+              ✖
+            </button>
+             <h2 className="text-xl font-semibold text-black text-center mb-4">Enquire Now</h2>
+            <NoPaperFormWidget />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
+/* ---------- MODAL STYLES ---------- */
+
+const overlay = {
+  position: "fixed",
+  inset: 0,
+  background: "rgba(0,0,0,0.6)",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  zIndex: 9999,
+};
+
+const modal = {
+  background: "#fff",
+  padding: "20px",
+  width: "90%",
+  maxWidth: "600px",
+  borderRadius: "10px",
+  position: "relative",
+};
+
+const closeBtn = {
+  position: "absolute",
+  top: "10px",
+  right: "12px",
+  cursor: "pointer",
+  fontSize: "18px",
+};

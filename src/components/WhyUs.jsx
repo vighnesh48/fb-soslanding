@@ -30,7 +30,7 @@ useEffect(() => {
   return () => window.removeEventListener("resize", checkScreen);
 }, []);
   return (
-    <section className="relative w-full bg-slate-50 py-12 overflow-hidden max-w-7xl mx-auto">
+    <section className="relative w-full  py-12 overflow-hidden max-w-7xl mx-auto">
 
       <motion.h2
         initial={{ opacity: 0, y: 15 }}
