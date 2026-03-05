@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import axios from "axios";
-
+import NoPaperFormsWidget1 from "./NoPaperFormsWidget1";
 const Form = () => {
   const [form, setForm] = useState({
     fullName: "",
@@ -245,7 +245,7 @@ const handleMobileBlur = async (e) => {
     >
       <div className="bg-white/50 backdrop-blur-xl shadow-xl rounded-2xl p-6 w-full max-w-md border border-white/10">
         <h2 className="text-xl font-semibold text-white text-center mb-4">Apply Now</h2>
-<div class="npf_wgts" data-height="530px" data-w="85ede9b36e7402c8518bc48b83ed8bf7"></div>
+        <NoPaperFormsWidget1 />
 
       </div>
     </motion.div>
