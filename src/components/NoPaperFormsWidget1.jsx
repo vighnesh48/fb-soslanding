@@ -17,7 +17,7 @@ function NoPaperFormsWidget1() {
 
   return (
     <div>
-       <div class="npf_wgts" data-height="550px" data-w="85ede9b36e7402c8518bc48b83ed8bf7"></div>
+       <div class="npf_wgts" data-height="550px" data-w="61eadc64fb6a2a3ab9d22e77978e3a4c"></div>
     </div>
   );
 }
