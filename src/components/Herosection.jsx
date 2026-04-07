@@ -56,7 +56,7 @@ School of Science (SOS)<br/>
               <span className="font-semibold text-white">NAAC Accredited ‘A’ Grade with 3.11 CGPA (1st Cycle)<br/>
 4th Top Ranking Private University in India 
 </span> <br /> <br />
-              <span className="text-base sm:text-base md:text-lg"><b>Approved by UGC | MSBTE | AIU</b></span>
+              <span className="text-base sm:text-base md:text-lg"><b>Approved by UGC | AIU</b></span>
             </p>
             <span className="text-3xl sm:text-4xl md:text-4xl font-extrabold bg-gradient-to-r from-red-600 to-red-400 bg-clip-text text-transparent tracking-wide drop-shadow-[0_4px_15px_rgba(0,0,0,0.7)] mb-1">
              Admissions Open 2026-27
